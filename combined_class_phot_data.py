@@ -733,8 +733,13 @@ def lat_long_heatmap(goodlist, multilist, otherlist, directory, filekey):
 
     for i in range(72):
         for j in range(36):
-            multi_ratio_array[i][j] = multi_counts[i][j] / total_counts[i][j]
-            good_ratio_array[i][j] = good_counts[i][j] / total_counts[i][j]
+            if total_counts[i][j] > 0.:
+                #print 'test line; please ignore'
+                multi_ratio_array[i][j] = multi_counts[i][j] / total_counts[i][j]
+                good_ratio_array[i][j] = good_counts[i][j] / total_counts[i][j]
+			#else:
+			#   multi_ratio_array[i][j] = 0.
+		    #   good_ratio_array[i][j] = 0.
 
     x2,y2 = np.meshgrid(binvec_long, binvec_lat)
 
@@ -748,8 +753,14 @@ def lat_long_heatmap(goodlist, multilist, otherlist, directory, filekey):
 
     minplane = [-5., -5.]
     maxplane = [5., 5.]
-
+	
     plt.figure()
+	
+    plt.gcf().subplots_adjust(left = 0.15)
+    plt.gcf().subplots_adjust(right=0.99)
+    plt.gcf().subplots_adjust(top=0.95)
+    plt.gcf().subplots_adjust(bottom=0.14)
+	
     plt.pcolormesh(x2, y2, np.swapaxes(multi_ratio_array,0,1), vmin = 0., vmax = 1.)
     plt.xlim([0., 360.])
     plt.ylim([-90., 90.])
@@ -762,13 +773,20 @@ def lat_long_heatmap(goodlist, multilist, otherlist, directory, filekey):
     plt.plot([0., 360.], minplane, 'w--', linewidth=4)
     plt.plot([0., 360.], maxplane, 'w--', linewidth=4)
 
-    plt.plot([280.4652, 302.8084], [-32.8884, -44.3277], 'wx', markersize=18, mew=5)
+    plt.scatter([280.4652, 302.8084], [-32.8884, -44.3277], s=484, linewidth=2, facecolors="None", edgecolors='w')
+	#circ_lmc = Circle((280.4652,-32.8884),50)
+	
 
     plt.savefig(directory+'/multi_density_colormap'+filekey+'.pdf')
     plt.savefig(directory+'/multi_density_colormap'+filekey+'.png')
     plt.close()
 
     plt.figure()
+    plt.gcf().subplots_adjust(left = 0.15)
+    plt.gcf().subplots_adjust(right=0.99)
+    plt.gcf().subplots_adjust(top=0.95)
+    plt.gcf().subplots_adjust(bottom=0.14)
+	
     plt.pcolormesh(x2, y2, np.swapaxes(good_ratio_array,0,1), vmin = 0., vmax = 1.)
     plt.xlim([0., 360.])
     plt.ylim([-90., 90.])
@@ -781,7 +799,7 @@ def lat_long_heatmap(goodlist, multilist, otherlist, directory, filekey):
     plt.plot([0., 360.], minplane, 'w--', linewidth=4)
     plt.plot([0., 360.], maxplane, 'w--', linewidth=4)
 
-    plt.plot([280.4652, 302.8084], [-32.8884, -44.3277], 'wx', markersize=18, mew=5)
+    plt.scatter([280.4652, 302.8084], [-32.8884, -44.3277], s=484, linewidth=2, facecolors="None", edgecolors='w')
 
     plt.savefig(directory+'/good_density_colormap'+filekey+'.pdf')
     plt.savefig(directory+'/good_density_colormap'+filekey+'.png')
