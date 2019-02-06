@@ -559,10 +559,10 @@ def coord_density_histogram(ratevec, rate_errvec, directory, test, strkey, label
     plt.rcParams['ytick.labelsize'] = 18
     plt.rcParams.update(params)
 
-    plt.gcf().subplots_adjust(left=0.12)
+    plt.gcf().subplots_adjust(left=0.15)
     plt.gcf().subplots_adjust(right=0.95)
     plt.gcf().subplots_adjust(top=0.95)
-    plt.gcf().subplots_adjust(bottom=0.12)
+    plt.gcf().subplots_adjust(bottom=0.15)
     
     plt.plot(hist_x, hist_y)
     plt.errorbar(error_x, error_y, yerr=rate_errvec, fmt='b.')
